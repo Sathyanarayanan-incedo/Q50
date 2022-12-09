@@ -1,36 +1,51 @@
-
-
 import React from 'react';
-import ReactDOM from 'react-dom';
+
+import ReactDOM from 'react-dom/client';
+
+import './index.css';
+
+import App from './App';
+
+import { createStore } from 'redux';
+
+import { Provider} from 'react-redux';
 
 
-if(module.hot){
-  module.hot.accept();
-}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
 
 
-  
-class App extends React.Component{
-  constructor(props){
-    super(props);
-   
-    this.no = this.no.bind(this);
-}
-  var a;
-  a = 0;
 
-  no(){
-      a = a+1;
-     }
-  render(){
- 
-    return (
-      <button onClick={this.no}>
-        Click me!
-      </button>
-    );
+const reducerFunction = (magicNumber=0, action) => {
+
+  switch(action.type) {
+
+    case "GENERATE_MAGIC_NUMBER":
+
+      return magicNumber+ Math.floor((Math.random() * 10) + 1000);
+
+    default:
+
+      return magicNumber;
+
+
+
   }
+
 }
 
 
-ReactDOM.render(<App/>, document.querySelector("#root"));
+
+const store = createStore(reducerFunction);
+
+
+
+root.render(
+
+  <Provider store={store}>
+
+    <App />
+
+  </Provider>
+
+);
